@@ -1,0 +1,25 @@
+# Use root/example as user/password credentials
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    networks:
+      - network_1
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  auth_api:
+    image: harmony_auth_api:v2.0.3
+    env_file: "auth/local.env"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8825:3000
+    networks:
+      - network_1
+
+networks:
+  network_1:

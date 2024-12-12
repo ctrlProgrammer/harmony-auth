@@ -3,7 +3,6 @@ package api
 import (
 	"auth/api/types"
 	"errors"
-	"fmt"
 	"net/http"
 	"os"
 	"time"
@@ -37,7 +36,6 @@ func (router *Router) ErrorLog(message string) {
 }
 
 func (router *Router) valudateAuth(c *gin.Context) {
-	fmt.Println(c.Request.Header)
 	token := c.GetHeader("HARMONY_MICRO_SERVICES")
 
 	// The microservice only validate the main microservices key, it will be located only in a local environment using the local subsystems
