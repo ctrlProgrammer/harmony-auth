@@ -34,13 +34,16 @@ func loadEnv() error {
 }
 
 func connectToDatabase(logger *zap.SugaredLogger) *mongo.Database {
-	// credential := options.Credential{
-	// 	Username: os.Getenv("MONGODB_USER"),
-	// 	Password: os.Getenv("MONGODB_PASSWORD"),
-	// }
+	logger.Info("Trying to connect to mongodb at " + os.Getenv("MONGODB"))
 
-	// client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(os.Getenv("MONGODB")).SetAuth(credential))
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(os.Getenv("MONGODB")))
+
+	if err != nil {
+		logger.Error(err.Error())
+		return nil
+	}
+
+	err = client.Ping(context.Background(), nil)
 
 	if err != nil {
 		logger.Error(err.Error())
