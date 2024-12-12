@@ -1,0 +1,75 @@
+{
+  "taskDefinitionArn": "arn:aws:ecs:us-east-2:510750057690:task-definition/harmony_authDeploy:1",
+  "containerDefinitions": [
+    {
+      "name": "auth",
+      "image": "510750057690.dkr.ecr.us-east-2.amazonaws.com/harmony/auth:latest",
+      "cpu": 0,
+      "portMappings": [
+        {
+          "name": "auth-3000-tcp",
+          "containerPort": 3000,
+          "hostPort": 3000,
+          "protocol": "tcp",
+          "appProtocol": "http"
+        }
+      ],
+      "essential": true,
+      "environment": [
+        {
+          "name": "MONGODB",
+          "value": "mongodb://localhost:27017"
+        },
+        {
+          "name": "PORT",
+          "value": "3000"
+        },
+        {
+          "name": "MONGODB_DATABASE",
+          "value": "harmony_auth"
+        },
+        {
+          "name": "HARMONY_MICRO_SERVICES_KEY",
+          "value": "localkey"
+        }
+      ],
+      "environmentFiles": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "systemControls": []
+    }
+  ],
+  "family": "harmony_authDeploy",
+  "executionRoleArn": "arn:aws:iam::510750057690:role/ECSTaskExecutionRole",
+  "networkMode": "awsvpc",
+  "revision": 1,
+  "volumes": [],
+  "status": "ACTIVE",
+  "requiresAttributes": [
+    {
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "name": "ecs.capability.execution-role-ecr-pull"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+    },
+    {
+      "name": "ecs.capability.task-eni"
+    }
+  ],
+  "placementConstraints": [],
+  "compatibilities": ["EC2", "FARGATE"],
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "3072",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "registeredAt": "2024-12-12T10:07:12.939Z",
+  "registeredBy": "arn:aws:iam::510750057690:root",
+  "enableFaultInjection": false,
+  "tags": []
+}
