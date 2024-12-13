@@ -2,7 +2,6 @@ package api
 
 import (
 	"auth/api/types"
-	"errors"
 	"net/http"
 	"os"
 	"time"
@@ -56,7 +55,7 @@ func (api *Router) createSession(user types.User) (*string, error) {
 
 	if validated {
 		api.updateSession(user.Email)
-		return nil, errors.New("your session already exists")
+		return &api.sessions[user.Email].SessionCode, nil
 	}
 
 	sessionCode := uuid.New().String()

@@ -211,6 +211,7 @@ func (api *API) login(c *gin.Context) {
 		return
 	}
 
+	user.Password = ""
 	session, err := api.createSession(*user)
 
 	if err != nil {
@@ -218,7 +219,7 @@ func (api *API) login(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"error": false, "data": session})
+	c.JSON(http.StatusOK, gin.H{"error": false, "data": gin.H{"session": session, "user": user}})
 }
 
 func (api *API) validateSession(c *gin.Context) {
@@ -304,6 +305,7 @@ func (api *API) Initialize(logger *zap.SugaredLogger, database *mongo.Database) 
 	api.sessions = make(map[string]*types.Session)
 
 	api.gin = gin.Default()
+	api.gin.Use(CorsMiddleware())
 
 	api.createRoutes()
 
